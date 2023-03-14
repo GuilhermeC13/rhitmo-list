@@ -15,3 +15,10 @@ final ButtonStyle filledButtonLargeStyle = ElevatedButton.styleFrom(
   foregroundColor: Colors.white,
   minimumSize: const Size.fromHeight(50),
 );
+
+final ButtonStyle outlinedButtonCompanyStyle = ElevatedButton.styleFrom(
+    foregroundColor: Colors.black54,
+    backgroundColor: Colors.white,
+    minimumSize: const Size.fromHeight(50),
+    shape: const StadiumBorder() // NEW
+    );

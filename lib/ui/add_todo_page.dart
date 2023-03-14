@@ -14,10 +14,23 @@ class AddTodoPage extends StatelessWidget {
   final TodoController todoController = Get.put(TodoController());
   final _formKey = GlobalKey<FormState>();
 
-  AddTodoPage({Key? key}) : super(key: key);
+  AddTodoPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Todo? todoToEdit = Get.arguments[0];
+    if (todoToEdit != null) {
+      todoController.textTodo.value = todoToEdit.text!;
+      todoController.timeTodo.value = TimeOfDay(
+          hour: int.parse(todoToEdit.time!.split(":")[0]),
+          minute: int.parse(todoToEdit.time!.split(":")[1]));
+      todoController.timeClicked.value = true;
+      todoController.isImportant.value =
+          todoToEdit.isImportant == 1 ? true : false;
+      todoController.imagem.value = XFile(todoToEdit.image!);
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adicionar tarefa'),
@@ -30,16 +43,18 @@ class AddTodoPage extends StatelessWidget {
             child: Column(
               children: [
                 TextFormWidget(
-                    label: 'Título',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Insira um texto';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      todoController.textTodo.value = value;
-                    }),
+                  label: 'Título',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Insira um texto';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    todoController.textTodo.value = value;
+                  },
+                  initialValue: todoController.textTodo.value,
+                ),
                 const SizedBox(
                   height: 16,
                 ),
@@ -124,18 +139,32 @@ class AddTodoPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        todoController.todos.add(
-                          Todo(
+                        if (todoToEdit != null) {
+                          todoController.todos[Get.arguments[1]] = Todo(
+                            text: todoController.textTodo.value,
+                            time: todoController.timeTodo.value.format(context),
+                            isImportant:
+                                todoController.isImportant.value ? 1 : 0,
+                            image: todoController.imagem.value.path,
+                          );
+                          todoController.updateTodo(Get.arguments[1], context);
+                        } else {
+                          todoController.todos.add(
+                            Todo(
                               text: todoController.textTodo.value,
                               time:
                                   todoController.timeTodo.value.format(context),
                               isImportant:
                                   todoController.isImportant.value ? 1 : 0,
-                              image: todoController.imagem.value.path),
-                        );
-                        todoController.addTodo(context);
+                              image: todoController.imagem.value.path,
+                            ),
+                          );
+                          todoController.addTodo(context);
+                        }
+
+                        todoController.clearObs();
                         Get.back();
                       }
                     },

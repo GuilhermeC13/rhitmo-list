@@ -70,4 +70,21 @@ class DatabaseProvider {
     String dbPath = await getDatabasesPath();
     await deleteDatabase(dbPath);
   }
+
+  Future<void> deleteTodo(int index) async {
+    Database db = await database;
+
+    await db.rawDelete(
+      'DELETE FROM $tableToDos WHERE id = $index',
+    );
+  }
+
+  Future<void> updateTodo(int index, String text, String time, int isImportant,
+      String image) async {
+    Database db = await database;
+
+    await db.rawUpdate(
+      'UPDATE $tableToDos SET text = $text, time = $time, isImportant = $isImportant, image = $image WHERE id = $index',
+    );
+  }
 }

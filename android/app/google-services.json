@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "525612812677",
+    "project_id": "rhitmo-list-teste",
+    "storage_bucket": "rhitmo-list-teste.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525612812677:android:6dccb77713885856331cec",
+        "android_client_info": {
+          "package_name": "com.example.rhitmo_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525612812677-9vse3kt78qrr3i12u0l9nvcfs12ijbe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH5UDQePbDXJGJ-9n0UIpP8qBn2-jgfyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525612812677-9vse3kt78qrr3i12u0l9nvcfs12ijbe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 class Todo {
+  int? id;
   String? text;
   int done;
   String? time;
@@ -8,6 +7,7 @@ class Todo {
   String? image;
 
   Todo({
+    this.id,
     this.text,
     this.done = 0,
     this.isImportant = 0,
@@ -16,6 +16,7 @@ class Todo {
   });
 
   factory Todo.fromJson(Map<String, dynamic> json) => Todo(
+        id: json['id'],
         text: json['text'],
         done: json['done'],
         isImportant: json['isImportant'],
@@ -24,6 +25,7 @@ class Todo {
       );
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'text': text,
         'done': done,
         'isImportant': isImportant,

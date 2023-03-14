@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
           Icons.add,
         ),
         onPressed: () {
+          todoController.clearObs();
           Get.toNamed(AddTodoPage.id);
         },
       ),
@@ -52,9 +53,24 @@ class HomePage extends StatelessWidget {
                         color: Colors.black,
                       ),
               ),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.edit),
+              trailing: Wrap(
+                spacing: 12, // space between two icons
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Get.toNamed(AddTodoPage.id,
+                          arguments: [todoController.todos[index], index]);
+                    },
+                    icon: const Icon(Icons.edit_outlined),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      todoController.todos.removeAt(index);
+                      todoController.deleteTodo(index);
+                    },
+                    icon: const Icon(Icons.delete_outline),
+                  ), // icon-2
+                ],
               ),
               leading: Checkbox(
                 value: todoController.todos[index].done == 1 ? true : false,

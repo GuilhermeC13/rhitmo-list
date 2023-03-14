@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rhitmo_list/controllers/database_provider.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../models/todo.dart';
 
@@ -16,15 +15,20 @@ class TodoController extends GetxController {
   var todos = List<Todo>.empty().obs;
 
   @override
-  void onInit() {
-    List? storedTodos = GetStorage().read<List>('todo');
-    if (storedTodos != null) {
-      todos = storedTodos.map((e) => Todo.fromJson(e)).toList().obs;
-    }
+  void onInit() async {
+    todos.value = await getTodos();
     ever(todos, (_) {
       GetStorage().write('todo', todos.toList());
     });
     super.onInit();
+  }
+
+  void clearObs() {
+    textTodo = ''.obs;
+    timeClicked = false.obs;
+    timeTodo = TimeOfDay.now().obs;
+    isImportant = false.obs;
+    imagem = XFile('').obs;
   }
 
   void addTodo(BuildContext context) {
@@ -37,5 +41,18 @@ class TodoController extends GetxController {
 
   Future<List<Todo>> getTodos() async {
     return await DatabaseProvider.db.getTodos();
+  }
+
+  void updateTodo(int index, BuildContext context) async {
+    DatabaseProvider.db.updateTodo(
+        index + 1,
+        textTodo.value,
+        timeTodo.value.format(context),
+        isImportant.value ? 1 : 0,
+        imagem.value.path);
+  }
+
+  void deleteTodo(int index) {
+    DatabaseProvider.db.deleteTodo(index + 1);
   }
 }
