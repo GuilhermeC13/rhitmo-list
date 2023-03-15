@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rhitmo_list/ui/add_todo_page.dart';
+import 'package:rhitmo_list/ui/pages/add_todo_page.dart';
 
-import '../controllers/todo_controller.dart';
+import '../../controllers/todo_controller.dart';
 
 class HomePage extends StatelessWidget {
   static const id = '/home_page';

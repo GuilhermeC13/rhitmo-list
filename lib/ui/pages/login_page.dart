@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rhitmo_list/controllers/login_controller.dart';
-import 'package:rhitmo_list/ui/home_page.dart';
+import 'package:rhitmo_list/ui/pages/home_page.dart';
 
-import '../utils/button_styles.dart';
+import '../../utils/button_styles.dart';
 import 'register_page.dart';
-import 'widgets/loaging_overlay_widget.dart';
-import 'widgets/text_form_widget.dart';
+import '../widgets/loaging_overlay_widget.dart';
+import '../widgets/text_form_widget.dart';
 
 class LoginPage extends StatelessWidget {
   static const id = '/login_page';

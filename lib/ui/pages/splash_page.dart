@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rhitmo_list/ui/home_page.dart';
-import 'package:rhitmo_list/ui/login_page.dart';
+import 'package:rhitmo_list/ui/pages/home_page.dart';
+import 'package:rhitmo_list/ui/pages/login_page.dart';
 
-import '../controllers/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class SplashPage extends StatelessWidget {
   SplashPage({Key? key}) : super(key: key);

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rhitmo_list/controllers/register_controller.dart';
 
-import '../utils/button_styles.dart';
+import '../../utils/button_styles.dart';
 import 'login_page.dart';
-import 'widgets/text_form_widget.dart';
+import '../widgets/text_form_widget.dart';
 
 class RegisterPage extends StatelessWidget {
   static const id = '/register_page';
