@@ -6,13 +6,15 @@ class TextFormWidget extends StatelessWidget {
     required this.label,
     required this.onChanged,
     required this.validator,
-    required this.initialValue,
+    this.initialValue,
+    this.obscureText,
   });
 
   final String label;
   final ValueChanged<String>? onChanged;
   final String? Function(String?)? validator;
   final String? initialValue;
+  final bool? obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,10 @@ class TextFormWidget extends StatelessWidget {
       height: 50,
       child: TextFormField(
         onChanged: onChanged,
-        initialValue: initialValue,
+        initialValue: initialValue ?? '',
         validator: validator,
-        expands: true,
-        maxLines: null,
-        minLines: null,
+        obscureText: obscureText ?? false,
+        maxLines: 1,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 8),
           errorStyle: const TextStyle(fontSize: 11, height: 0.3),

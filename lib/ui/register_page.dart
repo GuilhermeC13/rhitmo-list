@@ -18,7 +18,7 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(
-          color: Colors.deepOrange,
+          color: Color(0xFF0A0A3A),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -36,7 +36,7 @@ class RegisterPage extends StatelessWidget {
                 const Text(
                   'Crie sua conta',
                   style: TextStyle(
-                    color: Colors.deepOrange,
+                    color: Color(0xFF0A0A3A),
                     fontSize: 24.0,
                   ),
                 ),
@@ -52,9 +52,8 @@ class RegisterPage extends StatelessWidget {
                     return null;
                   },
                   onChanged: (value) {
-                    registerController.email.value = value;
+                    registerController.emailRegister.value = value;
                   },
-                  initialValue: '',
                 ),
                 const SizedBox(
                   height: 24.0,
@@ -64,8 +63,8 @@ class RegisterPage extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Insira uma senha';
-                    } else if (registerController.password.value !=
-                        registerController.confirmPassword.value) {
+                    } else if (registerController.passwordRegister.value !=
+                        registerController.confirmPasswordRegister.value) {
                       return 'As senhas precisam ser iguais';
                     } else if (value.length < 6) {
                       return 'Mínimo 6 caracteres';
@@ -73,9 +72,9 @@ class RegisterPage extends StatelessWidget {
                     return null;
                   },
                   onChanged: (value) {
-                    registerController.password.value = value;
+                    registerController.passwordRegister.value = value;
                   },
-                  initialValue: '',
+                  obscureText: true,
                 ),
                 const SizedBox(
                   height: 24.0,
@@ -85,8 +84,8 @@ class RegisterPage extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Confirme sua senha';
-                    } else if (registerController.password.value !=
-                        registerController.confirmPassword.value) {
+                    } else if (registerController.passwordRegister.value !=
+                        registerController.confirmPasswordRegister.value) {
                       return 'As senhas precisam ser iguais';
                     } else if (value.length < 6) {
                       return 'Mínimo 6 caracteres';
@@ -94,9 +93,9 @@ class RegisterPage extends StatelessWidget {
                     return null;
                   },
                   onChanged: (value) {
-                    registerController.confirmPassword.value = value;
+                    registerController.confirmPasswordRegister.value = value;
                   },
-                  initialValue: '',
+                  obscureText: true,
                 ),
                 const SizedBox(
                   height: 32.0,
@@ -124,13 +123,14 @@ class RegisterPage extends StatelessWidget {
                         return const Text('Ocorreu um erro');
                       case RegisterState.success:
                         if (registerController.user.value != null) {
+                          Get.back();
                           return const Text('Sucesso!');
                         } else {
                           return const Text('Ocorreu um erro');
                         }
                       default:
                         return const Text(
-                          'Entrar',
+                          'Cadastrar',
                         );
                     }
                   }),
@@ -151,7 +151,9 @@ class RegisterPage extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: " Clique aqui",
-                          style: TextStyle(color: Colors.deepOrange),
+                          style: TextStyle(
+                            color: Color(0xFF0A0A3A),
+                          ),
                         ),
                       ],
                     ),

@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rhitmo_list/controllers/notification_controller.dart';
 import 'package:rhitmo_list/ui/widgets/text_form_widget.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import '../controllers/todo_controller.dart';
 import '../models/todo.dart';
@@ -12,6 +16,8 @@ import '../utils/button_styles.dart';
 class AddTodoPage extends StatelessWidget {
   static const id = '/add_todo_page';
   final TodoController todoController = Get.put(TodoController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   final _formKey = GlobalKey<FormState>();
 
   AddTodoPage({
@@ -20,7 +26,11 @@ class AddTodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Todo? todoToEdit = Get.arguments[0];
+    Todo? todoToEdit;
+    if (Get.arguments != null) {
+      todoToEdit = Get.arguments[0];
+    }
+
     if (todoToEdit != null) {
       todoController.textTodo.value = todoToEdit.text!;
       todoController.timeTodo.value = TimeOfDay(
@@ -141,6 +151,8 @@ class AddTodoPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        final now = DateTime.now();
+                        configureLocalTimeZone(now.timeZoneName);
                         if (todoToEdit != null) {
                           todoController.todos[Get.arguments[1]] = Todo(
                             text: todoController.textTodo.value,
@@ -162,6 +174,21 @@ class AddTodoPage extends StatelessWidget {
                             ),
                           );
                           todoController.addTodo(context);
+                          notificationController.configureNotification(
+                            todoController.idTodo.value,
+                            todoController.textTodo.value,
+                            todoController.isImportant.value
+                                ? 'É importante!'
+                                : 'Nem tão importante assim',
+                            tz.TZDateTime.from(
+                                DateTime(
+                                    now.year,
+                                    now.month,
+                                    now.day,
+                                    todoController.timeTodo.value.hour,
+                                    todoController.timeTodo.value.minute),
+                                tz.local),
+                          );
                         }
 
                         todoController.clearObs();
@@ -176,5 +203,11 @@ class AddTodoPage extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  Future<void> configureLocalTimeZone(String timeZoneName) async {
+    tz.initializeTimeZones();
+    tz.setLocalLocation(
+        tz.getLocation(await FlutterNativeTimezone.getLocalTimezone()));
   }
 }

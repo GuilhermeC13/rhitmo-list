@@ -30,17 +30,12 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) => Dismissible(
             key: UniqueKey(),
             background: Container(
-              color: Colors.deepOrange,
+              color: const Color(0xFF0A0A3A),
               child: const Icon(
                 Icons.delete,
                 color: Colors.white,
               ),
             ),
-            onDismissed: (_) {
-              todoController.todos.removeAt(index);
-              Get.snackbar('Remove!', "Task was succesfully Delete",
-                  snackPosition: SnackPosition.BOTTOM);
-            },
             child: ListTile(
               title: Text(
                 todoController.todos[index].text!,
